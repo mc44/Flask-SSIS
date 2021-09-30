@@ -1,0 +1,59 @@
+{%- extends "layouts/master_layout.html" %}
+
+{# Loads some of the macros included with Flask-Bootstrap. We are using the
+   utils module here to automatically render Flask's flashed messages in a
+   bootstrap friendly manner #}
+{% import "bootstrap/utils.html" as utils %}
+{% block content %}
+    <div class="container">
+        <nav aria-label="breadcrumb">
+            <ol class="breadcrumb">
+                <li class="breadcrumb-item active" aria-current="page">Users</li>
+            </ol>
+        </nav>
+        <div class="row">
+            <div class="col text-center">
+                <span class="float-right"><a href="{{ url_for('.register') }}" class="btn btn-primary">New </a></span>
+            </div>
+
+        </div>
+        <div class="row mt-2">
+            <table class="table">
+                <thead>
+                <tr>
+                    <th>ID</th>
+                    <th>First Name</th>
+                    <th>Last Name</th>
+	                <th>Course</th>
+	                <th>Year</th>
+	                <th>Gender</th>
+	                <th></th>
+                </tr>
+	            </thead>
+	            <tbody>
+		        {% for user in data %}
+		            <tr>
+			            <td>{{user[0]}}</td>
+			            <td>{{user[1]}}</td>
+			            <td>{{user[2]}}</td>
+			            <td>{{user[3]}}</td>
+			            <td>{{user[4]}}</td>
+			            <td>{{user[5]}}</td>
+                        <td>
+                            <button class="btn btn-warning">Edit</button> 
+                            <button class="btn btn-danger btn-delete" data-id="{{ user[0]}}">Delete</button>
+                        </td>
+		            </tr>
+		        {% endfor %}
+	            </tbody>
+            </table>
+        </div>
+    </div>
+{%- endblock %}
+{% block scripts%}
+{{super()}}
+<script>
+    var url = "{{ url_for('.delete') }}";
+</script>
+<script src="{{ url_for('static',filename='js/index.js')}}"></script>
+{% endblock %}
