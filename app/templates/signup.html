@@ -1,6 +1,8 @@
 {% import "bootstrap/wtf.html" as wtf %}
 {%- extends "layouts/master_layout.html" %}
 {% block content %}
+
+
 <div class="container">
         <nav aria-label="breadcrumb">
             <ol class="breadcrumb">
@@ -11,7 +13,19 @@
         </nav>
         <div class="row">
             <div class="col">
-                {{ wtf.quick_form(form, url_for('.register'),"post") }}
+                <form class="form" method="post" role="form">
+                    {{ form.hidden_tag() }}
+                    {{ wtf.form_errors(form, hiddens="only") }}
+                
+                    {{ wtf.form_field(form.id) }}
+                    {{ wtf.form_field(form.firstname) }}
+                    {{ wtf.form_field(form.lastname) }}
+                    {{ wtf.form_field(form.course) }}
+                    {{ wtf.form_field(form.year) }}
+                    <label>Gender </label>
+                    {{ wtf.form_field(form.gender) }}
+                    <input class="btn btn-default" id="submit" name="submit" type="submit" value="Submit">
+                </form>
             </div>
         </div>
 </div>

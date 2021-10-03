@@ -1,6 +1,7 @@
 from app import mysql
 
 
+
 class Students(object):
 
     def __init__(self, firstname=None, lastname=None, course=None, id=None, year=None, gender=None):
@@ -18,6 +19,18 @@ class Students(object):
                 VALUES('{self.id}', '{self.firstname}', '{self.lastname}', '{self.course}','{self.year}','{self.gender}')" 
 
         cursor.execute(sql)
+        mysql.connection.commit()
+
+    def edit(self):
+        cursor = mysql.connection.cursor()
+        print("OVER HERE")
+        print(self.gender)
+        sql = f"UPDATE student SET lastname = '{self.firstname}', firstname = '{self.lastname}', course = '{self.course}', yearlevel = '{self.year}', gender = '{self.gender}'\
+             WHERE id = '{self.id}'"
+        try:
+            cursor.execute(sql)
+        except Exception as e:
+            print(e)
         mysql.connection.commit()
 
     @classmethod
@@ -39,5 +52,16 @@ class Students(object):
             return True
         except:
             return False
+
+    @staticmethod
+    def search(id):
+        cursor = mysql.connection.cursor()
+        sql = f"SELECT * from student where id = '{id}'"
+        cursor.execute(sql)
+        student = cursor.fetchall()
+        print("HEREEEEEEEEEEEEEEEEEEEEEEEEEEEEEEE")
+        print(student)
+        
+        return student
 
         
