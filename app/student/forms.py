@@ -14,12 +14,40 @@ class UserForm(FlaskForm):
 
     def __init__(self, id = None, firstname = None, lastname = None, course = None, year = None, gender = None):
         super().__init__()
-        self.process()
-        if id:
+        if gender:
+            self.id.render_kw = {'readonly': ''}
             self.id.default = id
             self.firstname.default = firstname
             self.lastname.default = lastname
             self.course.default = course
             self.year.default = year
             self.gender.default = gender
+            self.process()
+
+class CollegeForm(FlaskForm):
+    code = StringField('Code', [validators.DataRequired()])
+    name = StringField('Name', [validators.DataRequired(), validators.Length(min=1, max=50)])
+    submit = SubmitField("Submit")
+
+    def __init__(self, code = None, name = None):
+        super().__init__()
+        if name:
+            self.code.render_kw = {'readonly': ''}
+            self.code.default = code
+            self.name.default = name
+            self.process()
+
+class CourseForm(FlaskForm):
+    code = StringField('Code', [validators.DataRequired()])
+    name = StringField('Name', [validators.DataRequired(), validators.Length(min=1, max=50)])
+    college = SelectField('College', choices=[])
+    submit = SubmitField("Submit")
+
+    def __init__(self, code = None, name = None, college = None):
+        super().__init__()
+        if college:
+            self.code.render_kw = {'readonly': ''}
+            self.code.default = code
+            self.name.default = name
+            self.college.default = college
             self.process()

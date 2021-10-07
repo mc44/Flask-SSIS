@@ -25,7 +25,7 @@ $(function () {
 
     $(".btn-edit").click(function(){
         var id = $(this).attr('data-id');
-        location.href = `/user/edit?id=${id}`;
+        location.href = urledit + `?id=${id}`;
     });        
         
         

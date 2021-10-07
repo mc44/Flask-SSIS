@@ -18,7 +18,7 @@
         </nav>
         <div class="row">
             <div class="col text-center">
-                <span class="float-right"><a href="{{ url_for('.register') }}" class="btn btn-primary">New </a></span>
+                <span class="float-right"><a href="{{ url_for('.coursereg') }}" class="btn btn-primary">New </a></span>
             </div>
 
         </div>
@@ -26,27 +26,21 @@
             <table class="table">
                 <thead>
                 <tr>
-                    <th>ID</th>
-                    <th>First Name</th>
-                    <th>Last Name</th>
-	                <th>Course</th>
-	                <th>Year</th>
-	                <th>Gender</th>
+                    <th>Code</th>
+                    <th>Name</th>
+                    <th>College</th>
 	                <th></th>
                 </tr>
 	            </thead>
 	            <tbody>
-		        {% for user in data %}
+		        {% for course in data %}
 		            <tr>
-			            <td>{{user[0]}}</td>
-			            <td>{{user[1]}}</td>
-			            <td>{{user[2]}}</td>
-			            <td>{{user[3]}}</td>
-			            <td>{{user[4]}}</td>
-			            <td>{{user[5]}}</td>
+			            <td>{{course[0]}}</td>
+			            <td>{{course[1]}}</td>
+			            <td>{{course[2]}}</td>
                         <td>
-                            <button class="btn btn-warning btn-edit" data-id="{{ user[0]}}">Edit</button> 
-                            <button class="btn btn-danger btn-delete" data-id="{{ user[0]}}">Delete</button>
+                            <button class="btn btn-warning btn-edit" data-id="{{ course[0]}}">Edit</button> 
+                            <button class="btn btn-danger btn-delete" data-id="{{ course[0]}}">Delete</button>
                         </td>
 		            </tr>
 		        {% endfor %}
@@ -58,8 +52,8 @@
 {% block scripts%}
 {{super()}}
 <script>
-    var url = "{{ url_for('.delete') }}";
-    var urledit = "{{ url_for('.editroute') }}";
+    var url = "{{ url_for('.coursedel') }}";
+    var urledit = "{{ url_for('.courseedit') }}";
 </script>
 <script src="{{ url_for('static',filename='js/index.js')}}"></script>
 {% endblock %}

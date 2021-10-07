@@ -46,7 +46,7 @@ class Students(object):
     def delete(cls,id):
         try:
             cursor = mysql.connection.cursor()
-            sql = f"DELETE from student where id= {id}"
+            sql = f"DELETE from student where id = '{id}'"
             cursor.execute(sql)
             mysql.connection.commit()
             return True
@@ -65,3 +65,107 @@ class Students(object):
         return student
 
         
+class Colleges(object):
+
+    def __init__(self, code=None,name=None):
+        self.code = code
+        self.name = name
+
+    def add(self):
+        cursor = mysql.connection.cursor()
+        sql = f"INSERT INTO college(code, name) \
+                VALUES('{self.code}', '{self.name}')" 
+        cursor.execute(sql)
+        mysql.connection.commit()
+    
+    def edit(self):
+        cursor = mysql.connection.cursor()
+        sql = f"UPDATE college SET name = '{self.name}' WHERE code = '{self.code}'"
+        try:
+            cursor.execute(sql)
+        except Exception as e:
+            print(e)
+        mysql.connection.commit()
+
+    @classmethod
+    def all(cls):
+        cursor = mysql.connection.cursor()
+
+        sql = "SELECT * from college"
+        cursor.execute(sql)
+        result = cursor.fetchall()
+        return result
+
+    @classmethod
+    def delete(cls,id):
+        try:
+            cursor = mysql.connection.cursor()
+            sql = f"DELETE from college where code = '{id}'"
+            cursor.execute(sql)
+            mysql.connection.commit()
+            return True
+        except Exception as e:
+            print(e)
+            return False
+    
+    @staticmethod
+    def search(id):
+        cursor = mysql.connection.cursor()
+        sql = f"SELECT * from college where code = '{id}'"
+        cursor.execute(sql)
+        student = cursor.fetchall()
+        
+        return student
+
+class Courses(object):
+
+    def __init__(self, code=None,name=None,college=None):
+        self.code = code
+        self.name = name
+        self.college = college
+
+    def add(self):
+        cursor = mysql.connection.cursor()
+        sql = f"INSERT INTO course(code, name, college) \
+                VALUES('{self.code}', '{self.name}', '{self.college}')" 
+        cursor.execute(sql)
+        mysql.connection.commit()
+    
+    def edit(self):
+        cursor = mysql.connection.cursor()
+        sql = f"UPDATE course SET name = '{self.name}', college = '{self.college}' WHERE code = '{self.code}'"
+        try:
+            cursor.execute(sql)
+        except Exception as e:
+            print(e)
+        mysql.connection.commit()
+
+    @classmethod
+    def all(cls):
+        cursor = mysql.connection.cursor()
+
+        sql = "SELECT * from course"
+        cursor.execute(sql)
+        result = cursor.fetchall()
+        return result
+
+    @classmethod
+    def delete(cls,id):
+        try:
+            cursor = mysql.connection.cursor()
+            sql = f"DELETE from course where code = '{id}'"
+            cursor.execute(sql)
+            mysql.connection.commit()
+            return True
+        except Exception as e:
+            print(e)
+            return False
+    
+    @staticmethod
+    def search(id):
+        cursor = mysql.connection.cursor()
+        sql = f"SELECT * from course where code = '{id}'"
+        cursor.execute(sql)
+        course = cursor.fetchall()
+        
+        return course

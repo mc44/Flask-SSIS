@@ -6,6 +6,13 @@
 body {
   font-family: 'Lato', 'Helvetica Neue', Helvetica, Arial, sans-serif;
   overflow-x: hidden;
+  background-image: url("systembg.jpg");
+  background-repeat: no-repeat; 
+  background-size: cover;
+}
+.whole{
+  height:100%;
+  background-color: antiquewhite;
 }
 p {
   font-size: 20px;
