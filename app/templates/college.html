@@ -4,6 +4,7 @@
    utils module here to automatically render Flask's flashed messages in a
    bootstrap friendly manner #}
 {% import "bootstrap/utils.html" as utils %}
+{% import "bootstrap/wtf.html" as wtf %}
 {% block content %}
     <div class="container">
         <nav aria-label="breadcrumb">
@@ -19,6 +20,13 @@
         <div class="row">
             <div class="col text-center">
                 <span class="float-right"><a href="{{ url_for('.colreg') }}" class="btn btn-primary">New </a></span>
+                <form class="form" method="post" role="form">
+                    {{ form.hidden_tag() }}
+                    <span style="width:70% !important;">{{ wtf.form_errors(form, hiddens="only") }}</span>
+                
+                    {{ wtf.form_field(form.searchbar) }}
+                    <input class="btn btn-default" id="submit" name="submit" type="submit" value="Submit">
+                </form>
             </div>
 
         </div>

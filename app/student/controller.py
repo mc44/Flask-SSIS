@@ -1,7 +1,7 @@
 from flask import render_template, redirect, request, jsonify
 from . import user_bp
 import app.models as models
-from app.student.forms import UserForm, CollegeForm, CourseForm
+from app.student.forms import UserForm, CollegeForm, CourseForm, SearchForm
 from app import mysql
 
 def fetch_from_table(table_name, column):
@@ -12,11 +12,22 @@ def fetch_from_table(table_name, column):
     return result
 
 #student routes
-@user_bp.route('/user')
-@user_bp.route('/index')
+@user_bp.route('/user', methods=['POST','GET'])
 def index():
-    users = models.Students.all()
-    return render_template('index.html', data=users,title='Home',something='something')
+    if request.method == 'GET':
+        users = models.Students.all()
+        form = SearchForm(request.form)
+        return render_template('index.html', data=users,title='Home',form=form, something='something')
+    if request.method == 'POST':
+        form = SearchForm(request.form["searchbar"])
+        users = models.Students.all()
+        final = []
+        for data in users:
+            for row in data:
+                if form.searchbar.data.lower() in row.lower():
+                    final.append(data)
+                    break
+        return render_template('index.html', data=final,title='Home',form=form, something='something')
 
 @user_bp.route('/user/register', methods=['POST','GET'])
 def register():
@@ -64,10 +75,22 @@ def editroute():
         return render_template('signup.html', form=form, geturl='.editroute')           
 
 #college routes
-@user_bp.route('/college')
+@user_bp.route('/college', methods=['POST','GET'])
 def colindex():
-    colleges = models.Colleges.all()
-    return render_template('college.html', data=colleges,title='College List', something='something')
+    if request.method == 'GET':
+        colleges = models.Colleges.all()
+        form = SearchForm(request.form)
+        return render_template('college.html', data=colleges,title='College List', something='something',form=form)
+    if request.method == 'POST':
+        form = SearchForm(request.form["searchbar"])
+        colleges = models.Colleges.all()
+        final = []
+        for data in colleges:
+            for row in data:
+                if form.searchbar.data.lower() in row.lower():
+                    final.append(data)
+                    break
+        return render_template('college.html', data=final,title='College List', something='something',form=form)
 
 @user_bp.route('/college/new', methods=['POST','GET'])
 def colreg():
@@ -105,10 +128,22 @@ def colledit():
         return render_template('colcourseform.html', form=form, geturl='.colledit')
 
 #course routes
-@user_bp.route('/course')
+@user_bp.route('/course', methods=['POST','GET'])
 def courseindex():
-    colleges = models.Courses.all()
-    return render_template('course.html', data=colleges,title='Course List', something='something')
+    if request.method == 'GET':
+        colleges = models.Courses.all()
+        form = SearchForm(request.form)
+        return render_template('course.html', data=colleges,title='Course List', something='something',form=form)
+    if request.method == 'POST':
+        form = SearchForm(request.form["searchbar"])
+        colleges = models.Courses.all()
+        final = []
+        for data in colleges:
+            for row in data:
+                if form.searchbar.data.lower() in row.lower():
+                    final.append(data)
+                    break
+        return render_template('course.html', data=final,title='Course List', something='something',form=form)
 
 @user_bp.route('/course/new', methods=['POST','GET'])
 def coursereg():

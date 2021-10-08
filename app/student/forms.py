@@ -51,3 +51,12 @@ class CourseForm(FlaskForm):
             self.name.default = name
             self.college.default = college
             self.process()
+
+class SearchForm(FlaskForm):
+    searchbar = StringField('', [])
+    submit = SubmitField("Submit")
+
+    def __init__(self, searchbar = None):
+        super().__init__()
+        if searchbar:
+            self.searchbar.default = searchbar
