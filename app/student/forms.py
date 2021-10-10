@@ -53,10 +53,11 @@ class CourseForm(FlaskForm):
             self.process()
 
 class SearchForm(FlaskForm):
-    searchbar = StringField('', [])
+    searchbar = StringField("", [])
     submit = SubmitField("Submit")
 
     def __init__(self, searchbar = None):
         super().__init__()
         if searchbar:
             self.searchbar.default = searchbar
+            self.process()

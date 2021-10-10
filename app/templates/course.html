@@ -5,6 +5,12 @@
    bootstrap friendly manner #}
 {% import "bootstrap/utils.html" as utils %}
 {% import "bootstrap/wtf.html" as wtf %}
+{% block styles %}
+{{super()}}
+<style>
+  .control-label {display: none;}
+</style>
+{% endblock %}
 {% block content %}
     <div class="container">
         <nav aria-label="breadcrumb">
@@ -17,18 +23,17 @@
             |
             <a href="/course">Course List</a>
         </nav>
-        <div class="row">
-            <div class="col text-center">
-                <span class="float-right"><a href="{{ url_for('.coursereg') }}" class="btn btn-primary">New </a></span>
+        <div class="row align-items">
+            <div class="col-sm-6 text-right">
+                <span class="float-right"><a href="{{ url_for('.colreg') }}" class="btn btn-primary">New </a></span>
+            </div>
                 <form class="form" method="post" role="form">
                     {{ form.hidden_tag() }}
                     <span style="width:70% !important;">{{ wtf.form_errors(form, hiddens="only") }}</span>
                 
-                    {{ wtf.form_field(form.searchbar) }}
-                    <input class="btn btn-default" id="submit" name="submit" type="submit" value="Submit">
+                    <div class="col-sm-5">{{ wtf.form_field(form.searchbar) }}</div>
+                    <div class="col-sm-1"><input class="btn btn-default" id="submit" name="submit" type="submit" value="Submit"></div>
                 </form>
-            </div>
-
         </div>
         <div class="row mt-2">
             <table class="table">
