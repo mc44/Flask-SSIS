@@ -4,14 +4,19 @@
 
 
 <div class="container">
+    <div class="header" id="sticky">
+    <div class="head">
+        <h1>Simple Student Information System</h1>
+      </div>
         <nav aria-label="breadcrumb">
             <ol class="breadcrumb">
                 <li class="breadcrumb-item active" aria-current="page">
-                    <a href="{{ url_for('.index') }}">Students</a>
+                    <a href="{{ url_for('.index') }}">{{something}}</a>
                 </li>
             </ol>
         </nav>
-        <div class="row">
+    </div>
+        <div class="row" id="contentform">
             <div class="col">
                 <form class="form" method="post" role="form">
                     {{ form.hidden_tag() }}

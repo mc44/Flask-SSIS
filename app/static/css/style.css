@@ -10,12 +10,42 @@ body {
   background-repeat: no-repeat; 
   background-size: cover;
 }
-.container{
-  background-color:cornsilk;
-  height:100vh; 
+.head {
+  padding: 30px;
+  text-align: center;
+  background-color: #523305;
+  color:antiquewhite;
+  font-size:64px;
+}
+.header{
+  background-color: white;
+  border-bottom-style: outset;
+  border-left-style: outset;
+  border-right-style: outset;
+  border-width: 3px;
+}
+#sticky {
+  position: -webkit-sticky;
+  position: sticky;
+  top: 0;
+}
+#content{
   padding-left:50px; 
   padding-right:50px;
 }
+#contentform{
+  padding-top:30px;
+  padding-left:50px; 
+  padding-right:50px;
+}
+.container{
+  padding-left:0px; 
+  padding-right:0px;
+  background-color:cornsilk;
+  height:100vh; 
+  overflow:auto;
+}
+
 table{
   background-color: white;
 }
@@ -113,4 +143,26 @@ footer .footer-below {
 .error {
     color: red;
     font-size: 16px;
+}
+ol.breadcrumb {
+  padding: 10px 16px;
+  list-style: none;
+  background-color: #eee;
+}
+ol.breadcrumb li {
+  display: inline;
+  font-size: 18px;
+}
+ol.breadcrumb li+li:before {
+  padding: 8px;
+  color: black;
+  content: "/\00a0";
+}
+ol.breadcrumb li a {
+  color: #0275d8;
+  text-decoration: none;
+}
+ol.breadcrumb li a:hover {
+  color: #01447e;
+  text-decoration: underline;
 }

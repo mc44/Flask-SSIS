@@ -1,4 +1,6 @@
 from flask import render_template, redirect, request, jsonify
+
+from app.student import forms
 from . import user_bp
 import app.models as models
 from app.student.forms import UserForm, CollegeForm, CourseForm, SearchForm
@@ -17,7 +19,7 @@ def index():
     if request.method == 'GET':
         users = models.Students.all()
         form = SearchForm(request.form)
-        return render_template('index.html', data=users,title='Home',form=form, something='something')
+        return render_template('index.html', data=users,title='Home',form=form, something='Students')
     if request.method == 'POST':
         form = SearchForm(request.form["searchbar"])
         users = models.Students.all()
@@ -27,7 +29,7 @@ def index():
                 if form.searchbar.data.lower() in row.lower():
                     final.append(data)
                     break
-        return render_template('index.html', data=final,title='Home',form=form, something='something')
+        return render_template('index.html', data=final,title='Home',form=form, something='Students')
 
 @user_bp.route('/user/register', methods=['POST','GET'])
 def register():
@@ -43,7 +45,7 @@ def register():
         user.add()
         return redirect('/user')
     else:
-        return render_template('signup.html', form=form, geturl='.register')
+        return render_template('signup.html', form=form, geturl='.register', something='Back to Students')
 
 @user_bp.route("/user/delete", methods=["POST"])
 def delete():
@@ -72,7 +74,7 @@ def editroute():
         user.edit()
         return redirect('/user')
     else:
-        return render_template('signup.html', form=form, geturl='.editroute')           
+        return render_template('signup.html', form=form, geturl='.editroute', something='Back to Students')           
 
 #college routes
 @user_bp.route('/college', methods=['POST','GET'])
@@ -80,7 +82,7 @@ def colindex():
     if request.method == 'GET':
         colleges = models.Colleges.all()
         form = SearchForm(request.form)
-        return render_template('college.html', data=colleges,title='College List', something='something',form=form)
+        return render_template('college.html', data=colleges,title='College List', something='Colleges',form=form)
     if request.method == 'POST':
         form = SearchForm(request.form["searchbar"])
         colleges = models.Colleges.all()
@@ -90,7 +92,7 @@ def colindex():
                 if form.searchbar.data.lower() in row.lower():
                     final.append(data)
                     break
-        return render_template('college.html', data=final,title='College List', something='something',form=form)
+        return render_template('college.html', data=final,title='College List', something='Back to Colleges',form=form)
 
 @user_bp.route('/college/new', methods=['POST','GET'])
 def colreg():
@@ -101,7 +103,7 @@ def colreg():
         college.add()
         return redirect('/college')
     else:
-        return render_template('colcourseform.html', form=form, geturl='.colreg')
+        return render_template('colcourseform.html', form=form, geturl='.colreg', something='Back to Colleges',bc ="/college")
 
 @user_bp.route("/college/delete", methods=["POST"])
 def colldel():
@@ -125,7 +127,7 @@ def colledit():
         user.edit()
         return redirect('/college')
     else:
-        return render_template('colcourseform.html', form=form, geturl='.colledit')
+        return render_template('colcourseform.html', form=form, geturl='.colledit', something='Back to Colleges',bc ="/college")
 
 #course routes
 @user_bp.route('/course', methods=['POST','GET'])
@@ -133,7 +135,7 @@ def courseindex():
     if request.method == 'GET':
         colleges = models.Courses.all()
         form = SearchForm(request.form)
-        return render_template('course.html', data=colleges,title='Course List', something='something',form=form)
+        return render_template('course.html', data=colleges,title='Course List', something='Courses',form=form)
     if request.method == 'POST':
         form = SearchForm(request.form["searchbar"])
         colleges = models.Courses.all()
@@ -143,7 +145,7 @@ def courseindex():
                 if form.searchbar.data.lower() in row.lower():
                     final.append(data)
                     break
-        return render_template('course.html', data=final,title='Course List', something='something',form=form)
+        return render_template('course.html', data=final,title='Course List', something='Back to Courses',form=form)
 
 @user_bp.route('/course/new', methods=['POST','GET'])
 def coursereg():
@@ -159,7 +161,7 @@ def coursereg():
         course.add()
         return redirect('/course')
     else:
-        return render_template('colcourseform.html', form=form, geturl='.coursereg')
+        return render_template('colcourseform.html', form=form, geturl='.coursereg', something='Back to Courses',bc ="/course")
 
 @user_bp.route("/course/delete", methods=["POST"])
 def coursedel():
@@ -188,4 +190,4 @@ def courseedit():
         course.edit()
         return redirect('/course')
     else:
-        return render_template('colcourseform.html', form=form, geturl='.courseedit')                
+        return render_template('colcourseform.html', form=form, geturl='.courseedit', something='Back to Courses',bc ="/course")                

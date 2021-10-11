@@ -1,18 +1,24 @@
 {% import "bootstrap/wtf.html" as wtf %}
 {%- extends "layouts/master_layout.html" %}
 {% block content %}
+
 <div class="container">
-        <nav aria-label="breadcrumb">
-            <ol class="breadcrumb">
-                <li class="breadcrumb-item active" aria-current="page">
-                    <a href="{{ url_for('.index') }}">Users</a>
-                </li>
-            </ol>
-        </nav>
-        <div class="row">
+    <div class="header" id="sticky">
+    <div class="head">
+        <h1>Simple Student Information System</h1>
+      </div>
+    <nav>
+        <ol class="breadcrumb" style="padding-left:15px;"> 
+            <li class="breadcrumb-item active" aria-current="page">
+            <a href="{{bc}}">{{something}}</a></li>
+        </ol>
+    </nav>
+    </div>
+        <div class="row" id="contentform">
             <div class="col">
                 {{ wtf.quick_form(form, url_for(geturl),"post") }}
             </div>
         </div>
+        
 </div>
 {%- endblock %}

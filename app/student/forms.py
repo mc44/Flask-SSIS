@@ -4,7 +4,7 @@ from wtforms.fields.core import RadioField, SelectField
 
 
 class UserForm(FlaskForm):
-    id = StringField('ID', [validators.DataRequired()])
+    id = StringField('ID', [validators.DataRequired(),validators.Regexp("\d\d\d\d-\d\d\d\d")])
     firstname = StringField('First Name', [validators.DataRequired(), validators.Length(min=1, max=30)])
     lastname = StringField('Last Name', [validators.DataRequired(), validators.Length(min=1, max=30)])
     course = SelectField('Course', choices=[])
