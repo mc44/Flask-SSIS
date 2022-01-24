@@ -1,8 +1,11 @@
 from flask_wtf import FlaskForm
 from wtforms import StringField, PasswordField, validators, SubmitField
+from werkzeug.utils import secure_filename
 from wtforms.fields.core import RadioField, SelectField
+from flask_wtf.file import FileField, FileAllowed, FileRequired
+from flask_uploads import UploadSet, IMAGES
 
-
+images = UploadSet('images', IMAGES)
 class UserForm(FlaskForm):
     id = StringField('ID', [validators.DataRequired(),validators.Regexp("\d\d\d\d-\d\d\d\d")])
     firstname = StringField('First Name', [validators.DataRequired(), validators.Length(min=1, max=30)])
@@ -11,6 +14,7 @@ class UserForm(FlaskForm):
     year = SelectField('Year', choices=[('1st','1st'),('2nd','2nd'),('3rd','3rd'),('4th','4th')])
     gender = RadioField('Gender', choices=[('Male','Male'),('Female','Female'),('Other','Other'),('Prefer not to say','Prefer not to say')])
     submit = SubmitField("Submit")
+    upload = FileField('Select Image', validators=[FileAllowed(['jpg', 'png','jpeg'], 'Images only!')])
 
     def __init__(self, id = None, firstname = None, lastname = None, course = None, year = None, gender = None):
         super().__init__()

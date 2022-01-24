@@ -51,6 +51,7 @@
 	                <th>Course</th>
 	                <th>Year</th>
 	                <th>Gender</th>
+                    <th>Image</th>
 	                <th></th>
                 </tr>
 	            </thead>
@@ -63,6 +64,7 @@
 			            <td>{{user[3]}}</td>
 			            <td>{{user[4]}}</td>
 			            <td>{{user[5]}}</td>
+			            <td style="width:200px;height:200px;"><img src="{{user[6]}}" style="object-fit:fill;height:100%;width:100%;"></td>
                         <td>
                             <button class="btn btn-warning btn-edit" data-id="{{ user[0]}}">Edit</button> 
                             <button class="btn btn-danger btn-delete" data-id="{{ user[0]}}">Delete</button>

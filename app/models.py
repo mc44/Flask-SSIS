@@ -4,19 +4,20 @@ from app import mysql
 
 class Students(object):
 
-    def __init__(self, firstname=None, lastname=None, course=None, id=None, year=None, gender=None):
+    def __init__(self, firstname=None, lastname=None, course=None, id=None, year=None, gender=None,url=None):
         self.id = id
         self.firstname = firstname
         self.lastname = lastname
         self.course = course
         self.year = year
         self.gender = gender
+        self.url = url
 
     def add(self):
         cursor = mysql.connection.cursor()
 
-        sql = f"INSERT INTO student(id, lastname, firstname, course, yearlevel, gender) \
-                VALUES('{self.id}', '{self.firstname}', '{self.lastname}', '{self.course}','{self.year}','{self.gender}')" 
+        sql = f"INSERT INTO student(id, lastname, firstname, course, yearlevel, gender,images) \
+                VALUES('{self.id}', '{self.firstname}', '{self.lastname}', '{self.course}','{self.year}','{self.gender}','{self.url}')" 
 
         cursor.execute(sql)
         mysql.connection.commit()
@@ -24,9 +25,14 @@ class Students(object):
     def edit(self):
         cursor = mysql.connection.cursor()
         print("OVER HERE")
-        print(self.gender)
-        sql = f"UPDATE student SET lastname = '{self.firstname}', firstname = '{self.lastname}', course = '{self.course}', yearlevel = '{self.year}', gender = '{self.gender}'\
+        print(self.gender,self.url)
+        if self.url=="ignore":
+             sql = f"UPDATE student SET lastname = '{self.firstname}', firstname = '{self.lastname}', course = '{self.course}', yearlevel = '{self.year}', gender = '{self.gender}'\
+                 WHERE id = '{self.id}'"
+        else:
+            sql = f"UPDATE student SET lastname = '{self.firstname}', firstname = '{self.lastname}', course = '{self.course}', yearlevel = '{self.year}', gender = '{self.gender}', images = '{self.url}'\
              WHERE id = '{self.id}'"
+            
         try:
             cursor.execute(sql)
         except Exception as e:

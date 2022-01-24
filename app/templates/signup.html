@@ -9,7 +9,7 @@
         <h1>Simple Student Information System</h1>
       </div>
         <nav aria-label="breadcrumb">
-            <ol class="breadcrumb">
+            <ol class="breadcrumb" >
                 <li class="breadcrumb-item active" aria-current="page">
                     <a href="{{ url_for('.index') }}">{{something}}</a>
                 </li>
@@ -18,10 +18,11 @@
     </div>
         <div class="row" id="contentform">
             <div class="col">
-                <form class="form" method="post" role="form">
+                <form class="form" method="post" role="form" enctype="multipart/form-data">
                     {{ form.hidden_tag() }}
                     {{ wtf.form_errors(form, hiddens="only") }}
                 
+                    {{ wtf.form_field(form.upload) }}
                     {{ wtf.form_field(form.id) }}
                     {{ wtf.form_field(form.firstname) }}
                     {{ wtf.form_field(form.lastname) }}

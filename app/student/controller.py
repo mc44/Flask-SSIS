@@ -5,6 +5,9 @@ from . import user_bp
 import app.models as models
 from app.student.forms import UserForm, CollegeForm, CourseForm, SearchForm
 from app import mysql
+import cloudinary
+import cloudinary.uploader
+import cloudinary.api
 
 def fetch_from_table(table_name, column):
     cursor = mysql.connection.cursor()
@@ -39,9 +42,15 @@ def register():
     for row in fetch_from_table('course', 'code'):
         course = str(row[0])
         form.course.choices += [(course, course)]
-
     if request.method == 'POST' and form.validate():
-        user = models.Students(id=form.id.data, firstname=form.firstname.data, lastname=form.lastname.data, course=form.course.data, year=form.year.data, gender=form.gender.data,)
+        #form.upload.data.filename.split("/")[-1].split(".")[0]
+        if bool(form.upload.data):
+            req = cloudinary.uploader.upload(form.upload.data.stream, public_id = form.id.data)
+            print(req)
+            req = req["secure_url"]
+        else:
+            req=None
+        user = models.Students(id=form.id.data, firstname=form.firstname.data, lastname=form.lastname.data, course=form.course.data, year=form.year.data, gender=form.gender.data, url = req)
         user.add()
         return redirect('/user')
     else:
@@ -62,15 +71,23 @@ def editroute():
         student = models.Students.search(id)
         form = UserForm(student[0][0],student[0][1],student[0][2],student[0][3],student[0][4],student[0][5])
     else:
-        form = UserForm(request.form["id"],request.form["firstname"],request.form["lastname"],request.form["course"],request.form["year"],request.form["gender"])
+        form = UserForm()
     
     form.course.choices=[]
     for row in fetch_from_table('course', 'code'):
         course = str(row[0])
         form.course.choices += [(course, course)]
-
+    print()
     if request.method == 'POST' and form.validate():
-        user = models.Students(id=form.id.data, firstname=form.firstname.data, lastname=form.lastname.data, course=form.course.data, year=form.year.data, gender=form.gender.data,)
+        print(form.upload.data)
+        if bool(form.upload.data):
+            req = cloudinary.uploader.upload(form.upload.data.stream, public_id = form.id.data)
+            print(req)
+            req=req["secure_url"]
+        else:
+            req="ignore"
+            print(req)
+        user = models.Students(id=form.id.data, firstname=form.firstname.data, lastname=form.lastname.data, course=form.course.data, year=form.year.data, gender=form.gender.data,url=req)
         user.edit()
         return redirect('/user')
     else:
